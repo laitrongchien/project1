@@ -30,7 +30,7 @@ def calculate_fitness(chromosome, profits, costs, customers, contracts, times):
         contract += gene * contracts[i]
         time += gene * times[i]
     # fitness = profit - cost
-    fitness = profit * 10 + customer + contract - cost * 8 - time
+    fitness = profit * 10 + customer + contract - cost * 10 - time
     return fitness
 
 # print('2')
