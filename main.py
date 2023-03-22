@@ -13,13 +13,6 @@ number_employees = 300
 # number_employees = 2823
 number_parents = 10
 
-# df = pd.read_csv('sales_sample_data.csv', sep=',', encoding='latin1')
-# value = df['SALES'].values
-# print(value[0])
-
-# profits = df['SALES'].values
-# costs = df['QUANTITYORDERED'].values * df['PRICEEACH'].values * random.uniform(0.4, 0.6)
-
 df = pd.read_csv('dataset.csv', sep=',', encoding='latin1')
 profits = df['Profits Value']
 costs = df['Expenses Value']
@@ -55,6 +48,7 @@ for i in range(number_employees):
     
 # main function for genetic algorithm
 
+select_choice = []
 best = []
 def genetic_algorithm(profits_value, costs_value, customers_value, contracts_value, times_value, num_employees, pop_size, num_parents, mutation_prob, num_generations):
     # Solve the problem of selecting employees for a task in order to maximize profit and minimize cost using a genetic algorithm.
@@ -66,6 +60,11 @@ def genetic_algorithm(profits_value, costs_value, customers_value, contracts_val
         cost = [GA.calculate_cost(chromosome, profits_value) for chromosome in population]
         # print(cost)
         best.append(max(cost))
+        
+        np_cost = np.array(cost)
+        chromosome_idx = np.argmax(np_cost)
+        result = population[chromosome_idx]
+        select_choice.append(result)
         print('Generation: ' + str(iteration) + '-----> profits:' + str(max(cost)))
         
         # Calculate fitness of each chromosome
@@ -80,9 +79,10 @@ def genetic_algorithm(profits_value, costs_value, customers_value, contracts_val
         # Randomly change the value of some genes in the offspring
         offspring = GA.mutation(offspring, mutation_prob, 0, 1)
         population = offspring
-        # print(population)
     
-    print('Best profits: ' + str(max(best)))  
+    print('Best profits: ' + str(max(best))) 
+    print(result)
+    
 
 def draw_profit_generations(y_list):
     x_list = np.arange(1, len(y_list)+1) 

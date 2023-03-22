@@ -30,6 +30,8 @@ def calculate_fitness(chromosome, profits, costs, customers, contracts, times):
         contract += gene * contracts[i]
         time += gene * times[i]
     # fitness = profit - cost
+    # if cost <= 1620000: fitness = profit * 10 + customer + contract - cost * 10 - time
+    # else: fitness = 0
     fitness = profit * 10 + customer + contract - cost * 10 - time
     return fitness
 
